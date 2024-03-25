@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<link rel="stylesheet" href="styles.css">
+<body>
+    <div id="container">
+        <h1>USER LOGIN</h1>
+        <form action="#">
+            <div class="data">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <small></small>
+            </div>
+
+            <div class="data">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <small></small>
+            </div>
+
+            <div class="forgot"><a href="#">Forgot Password?</a></div>
+
+            <div class="btn">
+                <button type="submit">Login</button>
+            </div>
+            
+            <div class="signup-link">Create new account ?<a href="http://127.0.0.1:5500/register.html">Signup</a></div>
+        </form>
+    </div>
+</body>
+<script>
+    const form = document.querySelector("form");
+    const data = document.querySelectorAll(".data");
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        checkInput();
+    });
+
+    function checkInput() {
+        let isValid = true;
+        data.forEach(input => {
+            const inputField = input.querySelector('input');
+            const small = input.querySelector("small");
+            const dataValue = inputField.value.trim();
+            if (dataValue === '') {
+                setError(small, 'Field cannot be blank');
+                isValid = false;
+            } else {
+                setSuccess(small);
+            }
+        });
+        if (isValid) {
+            form.submit();
+        }
+    }
+    
+    function setError(small, message) {
+        small.innerText = message;
+    }
+
+    function setSuccess(small) {
+        small.innerText = '';
+    }
+</script>
+</html>

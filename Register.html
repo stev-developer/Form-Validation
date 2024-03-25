@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>REGISTER</h1>
+    <form id="form">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name">
+            <small></small>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+            <small></small>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password">
+            <small></small>
+        </div>
+        <div>
+            <label for="cpassword">Confirm Password:</label>
+            <input type="password" id="cpassword">
+            <small></small>
+        </div>
+
+        <div id="register">
+            <p>Already have a account? <a href="http://127.0.0.1:5500/index.html">Login</a></p>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById("form");
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const cpassword = document.getElementById("cpassword");
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            checkInput();
+        });
+
+        function checkInput() {
+            const nameValue = name.value.trim();
+            const emailValue = email.value.trim();
+            const passwordValue = password.value.trim();
+            const cpasswordValue = cpassword.value.trim();
+
+            if (nameValue === '') {
+                setError(name, 'Name Cannot Be Blank');
+            } else {
+                setSuccess(name);
+            }
+
+            if (emailValue === '') {
+                setError(email, 'Email Cannot Be Blank');
+            } else if (!isEmail(emailValue)) {
+                setError(email, 'Not a valid Email');
+            } else {
+                setSuccess(email);
+            }
+
+            if (passwordValue === '') {
+                setError(password, 'Password Cannot Be Blank');
+            } else {
+                setSuccess(password);
+            }
+
+            if (cpasswordValue === '') {
+                setError(cpassword, 'Confirm Password Cannot Be Blank');
+            } else if (passwordValue !== cpasswordValue) {
+                setError(cpassword, 'Passwords Do Not Match');
+            } else {
+                setSuccess(cpassword);
+            }
+        }
+
+        function setError(input, message) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector("small");
+            small.innerText = message;
+        }
+
+        function setSuccess(input) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector("small");
+            small.innerText = '';
+        }
+
+        function isEmail(email) {
+            return /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(email);
+        }
+    </script>
+</body>
+</html>
